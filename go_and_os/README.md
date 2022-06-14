@@ -502,3 +502,330 @@ Hi
 Here there is a call to `bufio.NewScanner()` using standard input ( `os.Stdin` ) as its parameter. This call returns a `bufio.Scanner` variable, which is then used with the `Scan()` function for reading from `os.Stdin` line by line. Each line that is read is printed on the screen before getting the next one.
 
 ## Working with command-line arguments
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) == 1 {
+		fmt.Println("Please give one or more floats.")
+		os.Exit(1)
+	}
+	arguments := os.Args                           // os.Args is a Go slice with string values
+	min, _ := strconv.ParseFloat(arguments[1], 64) // convert string to float 64 bit
+	max, _ := strconv.ParseFloat(arguments[1], 64) // convert string to float 64 bit
+
+	for i := 2; i < len(arguments); i++ {
+		n, _ := strconv.ParseFloat(arguments[i], 64)
+		if n < min {
+			min = n
+		}
+		if n > max {
+			max = n
+		}
+	}
+	fmt.Println("Min:", min)
+	fmt.Println("Max:", max)
+}
+```
+```
+$ go run cla.go 2.5 3.5 6.5
+Min: 2.5
+Max: 6.5
+```
+Note that `os.Args` is a Go slice with string values. The first element in the slice is the name of the executable program. Therefore, in order to initialize the `min` and `max` variables, you will need to use the second element of the `os.Args` string slice that has an index value of 1.
+
+`cla.go` ignores the error value returned by the `strconv.ParseFloat()` function using the following statement:
+```go
+n, _ := strconv.ParseFloat(arguments[i], 64)
+```
+The underscore character, which is called a **blank identifier**, is the Go way of discarding a value. As you might expect, the program does not behave well when it receives erroneous input. Worst of all, the program does not generate any warnings to inform the user that there were one or more errors while processing the command-line arguments.
+```
+$ go run cla.go a b c 10
+Min: 0
+Max: 10
+```
+
+## About error output
+```go
+package main
+
+import (
+	"io"
+	"os"
+)
+
+func main() {
+	myString := ""
+	arguments := os.Args
+	if len(arguments) == 1 {
+		myString = "Please give me one argument!"
+	} else {
+		myString = arguments[1]
+	}
+	io.WriteString(os.Stdout, "This is Standard output\n")
+	io.WriteString(os.Stderr, myString)
+	io.WriteString(os.Stderr, "\n")
+}
+```
+The preceding output cannot help you differentiate between data written to standard output and data written to standard error, which could be very useful at times.
+Thus, when using `bash(1)` , you can redirect the standard error output to a file as follows:
+```
+$ go run stdERR.go 2>/tmp/stdError
+This is Standard output
+$ cat /tmp/stdError
+Please give me one argument!
+```
+
+## Writing to log files
+The `log` package allows you to send log messages to the system logging service of your Unix machine, whereas the `syslog` Go package, which is part of the log package, allows you to define the logging level and the logging facility that your Go program will use.
+
+Usually, most system log files on a Unix operating system can be found under the `/var/log` directory. However, the log files of many popular services, such as Apache and Nginx, can be found elsewhere, depending on their configuration.
+
+The `log` package offers many functions for sending output to the syslog server of a Unix machine. The list of function includes `log.Printf()` , `log.Print()` , `log.Println()` , `log.Fatalf()` , `log.Fatalln()` , `log.Panic()` , `log.Panicln()` , and `log.Panicf()` .
+
+## Logging levels
+The logging level is a value that specifies the severity of the log entry. Various logging levels exist including `debug` , `info` , `notice` , `warning` , `err` , `crit` , `alert` , and `emerg` (in reverse order of severity).
+
+## Log servers
+All Unix machines have a separate server process that is responsible for receiving logging data and writing it to log files. Various log servers exist that work on Unix machines; however, only two of them are used on most Unix variants: `syslogd(8)` and `rsyslogd(8)`.
+
+## A Go program that sends information to log files
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"log/syslog"
+	"os"
+	"path/filepath"
+)
+
+func main() {
+	programName := filepath.Base(os.Args[0]) // logFiles
+	sysLog, err := syslog.New(syslog.LOG_INFO|syslog.LOG_LOCAL7,
+		programName)
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		log.SetOutput(sysLog)
+	}
+	log.Println("LOG_INFO + LOG_LOCAL7: Logging in Go!")
+	sysLog, err = syslog.New(syslog.LOG_MAIL, "Some program!")
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		log.SetOutput(sysLog)
+	}
+	log.Println("LOG_MAIL: Logging in Go!")
+	fmt.Println("Will you see this?")
+}
+```
+```
+$ go run logFiles.go 
+Will you see this?
+```
+The logs are stored in some different location.
+```
+$ grep LOG_ /var/log/syslog
+Jun 14 05:47:48 workstation logFiles[5784]: 2022/06/14 05:47:48 LOG_INFO + LOG_LOCAL7: Logging in Go!
+Jun 14 05:47:48 workstation Some program![5784]: 2022/06/14 05:47:48 LOG_MAIL: Logging in Go!
+```
+The important thing to remember from this section is that if the logging server of a Unix machine is not configured to catch all logging facilities, some of the log entries that you send to it might get discarded without any warnings.
+
+## About log.Fatal()
+The `log.Fatal()` function is used when something really bad has happened, and you just want to exit your program as fast as possible after reporting the bad situation.
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"log/syslog"
+)
+
+func main() {
+	sysLog, err := syslog.New(syslog.LOG_ALERT|syslog.LOG_MAIL,
+		"Some program!")
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		log.SetOutput(sysLog)
+	}
+	log.Fatal(sysLog)
+	fmt.Println("Will you see this?")
+}
+```
+```
+$ go run logFatal.go 
+exit status 1
+```
+As you can easily understand, the use of `log.Fatal()` terminates a Go program at the point where `log.Fatal()` was called, which is the reason that you did not see the output from the `fmt.Println("Will you see this?")` statement.
+However, because of the parameters of the `syslog.New()` call, a log entry has been added to the log file that is related to mail, which is `/var/log/mail.log`.
+```
+$ grep 'MAIL' /var/log/mail.log 
+Jun 14 05:47:48 workstation Some program![5784]: 2022/06/14 05:47:48 LOG_MAIL: Logging in Go!
+```
+
+## About log.Panic()
+There are situations where a program will fail for good, and you want to have as much information about the failure as possible. In such difficult circumstances, you might consider using `log.Panic()`.
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"log/syslog"
+)
+
+func main() {
+	sysLog, err := syslog.New(syslog.LOG_ALERT|syslog.LOG_MAIL,
+		"Some program!")
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		log.SetOutput(sysLog)
+	}
+	log.Panic(sysLog)
+	fmt.Println("Will you see this?")
+}
+```
+```
+$ go run logPanic.go 
+panic: &{17 Some program! workstation   {0 0} 0xc0000a6078}
+
+goroutine 1 [running]:
+log.Panic({0xc000048f60?, 0x515198?, 0xc0000ae120?})
+        /usr/local/go/src/log/log.go:385 +0x65
+main.main()
+        /home/himanshu/HP/dev/Learn-Go/go_and_os/logPanic.go:17 +0xb7
+exit status 2
+```
+Looking for logs in logs files
+```
+$ grep 'Some program' /var/log/mail.log 
+Jun 14 06:27:59 workstation Some program![9850]: 2022/06/14 06:27:59 &{17 Some program! workstation   {0 0} 0xc0000a6078}
+```
+
+## Error handling in Go
+There is a separate data type for errors, named `error`.
+In order to create a new error variable, you will need to call the `New()` function of the errors standard Go package.
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func returnError(a, b int) error {
+	if a == b {
+		err := errors.New("Error in returnError() function!")
+		return err
+	} else {
+		return nil
+	}
+}
+
+func main() {
+	err := returnError(1, 2)
+	if err == nil {
+		fmt.Println("returnError() ended normally!")
+	} else {
+		fmt.Println(err)
+	}
+	err = returnError(10, 10)
+	if err == nil {
+		fmt.Println("returnError() ended normally!")
+	} else {
+		fmt.Println(err)
+	}
+	if err.Error() == "Error in returnError() function!" {
+		fmt.Println("!!")
+	}
+}
+```
+```
+$ go run newError.go 
+returnError() ended normally!
+Error in returnError() function!
+!!
+```
+
+If you try to compare an `error` variable with a string variable without converting the `error` variable to a `string` first, the Go compiler will create the following error message:
+```
+# command-line-arguments
+./newError.go:33:9: invalid operation: err == "Error in returnError()
+function!" (mismatched types error and string)
+```
+
+## Error handling
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	// not extra cmd line arg given
+	if len(os.Args) == 1 {
+		fmt.Println("Please give one or more floats.")
+		os.Exit(1)
+	}
+	// get cmd line args
+	arguments := os.Args
+	var err error = errors.New("An error")
+
+	/*
+		This is the trickiest part of the program because, if the first command-line argument is not a
+		proper float, you will need to check the next one and keep checking until you find a suitable
+		command-line argument. If none of the command-line arguments are in the correct format,
+		errors.go will terminate and print a message on the screen. All this checking happens by
+		examining the error value that is returned by strconv.ParseFloat() . All of this code is
+		there just for the accurate initialization of the min and max variables.
+	*/
+
+	k := 1
+	var n float64
+	for err != nil {
+		if k >= len(arguments) {
+			fmt.Println("None of the arguments is a float!")
+			return
+		}
+		n, err = strconv.ParseFloat(arguments[k], 64)
+		k++
+	}
+	min, max := n, n
+	for i := 2; i < len(arguments); i++ {
+		n, err := strconv.ParseFloat(arguments[i], 64)
+		if err == nil {
+			if n < min {
+				min = n
+			}
+			if n > max {
+				max = n
+			}
+		}
+	}
+	fmt.Println("Min:", min)
+	fmt.Println("Max:", max)
+}
+```
+```
+$ go run errors.go st 5 pp 1
+Min: 1
+Max: 5
+```
