@@ -590,4 +590,10 @@ exit status 2
 ```
 
 ## `constants`
+constants are usually global variables. Thus, you might rethink your approach if you find yourself defining too many
+constant variables with a local scope!
+
+The main benefit that you get from using constants in your programs is the guarantee that their value will not change during program execution!
+
+Strictly speaking, the value of a constant variable is defined at compile time-not at run time. Behind the scenes, Go uses Boolean, string, or number as the type for storing a constant variable.
 
