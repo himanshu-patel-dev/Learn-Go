@@ -15,3 +15,12 @@ func main() {
 	}
 	fmt.Println("Exiting program")
 }
+
+/*
+The value of i is 0
+The value of i is 1
+The value of i is 3
+The value of i is 4
+Breaking out of loop
+Exiting program
+*/
