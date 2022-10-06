@@ -12,7 +12,7 @@ func (s *Stack) Push(value int) {
 
 func (s *Stack) Pop() int {
 	l := len(s.items)
-	if l < 0 {
+	if l == 0 {
 		return -1
 	}
 	result := s.items[l-1]
