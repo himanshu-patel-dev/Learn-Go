@@ -6,6 +6,7 @@ func main() {
 	// arrays
 	arr := [5]int{2, 4, 6, 8, 10}
 	fmt.Println(arr)
+	//
 
 	for i, val := range arr {
 		fmt.Println("index: ", i, " value: ", val)
