@@ -2,7 +2,14 @@ package main
 
 import "fmt"
 
+// The type of elements and length are both part of the array’s type.
+// By default an array is initialized with zero-valued of it's type
+
 func main() {
+	// create an empty array with all values init with zero value
+	var a [5]int
+	fmt.Println("emp:", a)
+
 	anArray := [5]int{0, 1, -1, 2, -2}
 	for i, value := range anArray {
 		fmt.Println("index:", i, "value: ", value)

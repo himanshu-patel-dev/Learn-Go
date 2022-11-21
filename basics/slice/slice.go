@@ -90,4 +90,15 @@ func main() {
 
 	// use `[:]` notation for creating a new slice from an existing slice or array
 
+	// make a slice with just outer slice len
+	twoD := make([][]int, 3)
+	for i := 0; i < 3; i++ {
+		innerLen := i + 1
+		// dynamically assign the sub slice
+		twoD[i] = make([]int, innerLen)
+		for j := 0; j < innerLen; j++ {
+			twoD[i][j] = i + j
+		}
+	}
+	fmt.Println("2d: ", twoD) // 2d:  [[0] [1 2] [2 3 4]]
 }
