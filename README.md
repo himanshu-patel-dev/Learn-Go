@@ -26,3 +26,5 @@ Learning GO Lang
 - [Struct](basics/struct/struct.go)
 - [Generics](basics/generics/generics.go) - For More https://go.dev/doc/tutorial/generics
 - [Errors](basics/errors/errors.go)
+- [Goroutines](basics/goroutines/goroutines.go)
+- [Channels](basics/channels/channels.go)
