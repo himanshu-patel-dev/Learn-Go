@@ -21,4 +21,8 @@ Learning GO Lang
 - [Sort Slice](basics/sort_slice/sort_slice.go)
 - [Copy Slice](basics/copy_slice/copy_slice.go)
 - [Map](basics/map/map.go)
-- [Function](basics/function/function.go)
+- [Function](basics/function/function.go) - Functions and Closures
+- [Pointers](basics/pointers/pointers.go)
+- [Struct](basics/struct/struct.go)
+- [Generics](basics/generics/generics.go) - For More https://go.dev/doc/tutorial/generics
+- [Errors](basics/errors/errors.go)
