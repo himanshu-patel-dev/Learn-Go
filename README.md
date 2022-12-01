@@ -46,3 +46,6 @@ Learning GO Lang
 - [Atomic Counter](basics/atomic_counter/atomic_counter.go)
 - [Mutex](basics/mutex/mutex.go)
 - [Stateful Goroutines](basics/state_goroutine/state_goroutine.go)
+- [Sorting](basics/sorting/sorting.go)
+- [Sorting Function](basics/sorting_func/sorting_func.go)
+- [Text Templates](basics/text_temp/text_temp.go)
