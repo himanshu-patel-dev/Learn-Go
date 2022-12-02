@@ -49,3 +49,7 @@ Learning GO Lang
 - [Sorting](basics/sorting/sorting.go)
 - [Sorting Function](basics/sorting_func/sorting_func.go)
 - [Text Templates](basics/text_temp/text_temp.go)
+- [Regular Exression](basics/regex/regex.go)
+- [JSON](basics/json/json.go)
+- [XML](basics/xml/xml.go)
+- [Time](basics/time/time.go)
