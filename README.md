@@ -53,3 +53,5 @@ Learning GO Lang
 - [JSON](basics/json/json.go)
 - [XML](basics/xml/xml.go)
 - [Time](basics/time/time.go)
+- [Epoch](basics/epoch/epoch.go)
+- [Time Formatting/Parsing](basics/time_formatting/time_formatting.go)
