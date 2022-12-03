@@ -55,3 +55,8 @@ Learning GO Lang
 - [Time](basics/time/time.go)
 - [Epoch](basics/epoch/epoch.go)
 - [Time Formatting/Parsing](basics/time_formatting/time_formatting.go)
+- [Random Numbers](basics/random_num/random_num.go)
+- [Number Parsing](basics/num_parse/num_parse.go)
+- [URL Parsing](basics/url_parsing/url_parsing.go)
+- [SHA](basics/sha/sha.go)
+- [Base64 Encoding](basics/base64/base64.go)
