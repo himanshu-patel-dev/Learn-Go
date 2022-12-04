@@ -66,3 +66,8 @@ Learning GO Lang
 - [File Path](basics/file_path/file_path.go)
 - [Directories](basics/dir/dir.go)
 - [Temp file and dir](basics/temp_dir/temp_dir.go)
+- [Embed Directive](basics/embed/embed.go)
+- [Benchmarking](basics/benchmark/benchmark.go)
+- [Command Line Param](basics/cmd/cmd.go)
+- [Command Line Flag](basics/flags/flags.go)
+- [Command Line SubCMD](basics/sub_cmd/sub_cmd.go)
