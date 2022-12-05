@@ -13,7 +13,6 @@ Learning GO Lang
 - [Variables](basics/variables/variables.go)
 - [Constants](basics/constant/constant.go)
 - [For](basics/for/for.go)
-- [For](basics/for/for.go)
 - [If/Else](basics/ifelse/ifelse.go)
 - [Switch](basics/switch/switch.go)
 - [Range Array](basics/range/range.go)
@@ -75,7 +74,7 @@ Learning GO Lang
 - [HTTP Client](basics/http_client/http_client.go)
 - [HTTP Server](basics/http_server/http_server.go)
 - [Context](basics/context/context.go)
-- [Spawning Processes](basics/process/process.go) #TODO
+- [Spawning Processes](basics/process/process.go)
 - [Exec Process](basics/exec_process/exec_process.go)
 - [Signal](basics/signal/signal.go)
 - [Exit](basics/exit/exit.go)
