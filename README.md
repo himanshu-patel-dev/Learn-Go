@@ -71,3 +71,7 @@ Learning GO Lang
 - [Command Line Param](basics/cmd/cmd.go)
 - [Command Line Flag](basics/flags/flags.go)
 - [Command Line SubCMD](basics/sub_cmd/sub_cmd.go)
+- [Environment Variable](basics/env_var/env_var.go)
+- [HTTP Client](basics/http_client/http_client.go)
+- [HTTP Server](basics/http_server/http_server.go)
+- [Context](basics/context/context.go)
