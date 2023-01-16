@@ -19,8 +19,6 @@ func (n *Node) Insert(value int) *Node {
 		n.left = n.left.Insert(value)
 	} else if n.data < value {
 		n.right = n.right.Insert(value)
-	} else {
-
 	}
 	return n
 }
@@ -50,6 +48,6 @@ func main() {
 
 /*
 50 100 150
-&{150 <nil> <nil>}
-<nil>
+true
+false
 */
