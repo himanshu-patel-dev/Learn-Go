@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	fmt.Println("------------ Len ------------")
+	fmt.Println(len("abcd")) // 4
+
 	fmt.Println("------------ Clone String ------------")
 	// clone a string
 	sampleString := "HelloWorld"
@@ -141,5 +144,38 @@ func main() {
 	}
 	// You came a long way...
 	fmt.Println(strings.Map(g, "Lbh pnzr n ybat jnl..."))
+
+	fmt.Println("------------ Count ------------")
+	// return a new string consisting of n copies of s
+	fmt.Println(strings.Repeat("la", 2) + " Land") // lala Land
+
+	fmt.Println("------------ Replace & ReplaceAll ------------")
+	// return a copy of string s with first n non-overlapping instances
+	// of old replaced by new
+	fmt.Println(strings.Replace("old old old", "o", "go", 2))  // gold gold old
+	fmt.Println(strings.Replace("old old old", "o", "go", -1)) // gold gold gold
+	fmt.Println(strings.ReplaceAll("old old old", "o", "go"))  // gold gold gold
+
+	fmt.Println("------------ Split ------------")
+	fmt.Printf("%q\n", strings.Split("a,b,c", ","))                 // ["a" "b" "c"]
+	fmt.Printf("%q\n", strings.Split(" xyz ", ""))                  // [" " "x" "y" "z" " "]
+	fmt.Printf("%q\n", strings.Split("a man a plan a canal", "a ")) // ["" "man " "plan " "canal"]
+	fmt.Printf("%q\n", strings.Split("", "Ronaldo"))                // [""]
+
+	fmt.Println("------------ Lower Upper ------------")
+	fmt.Println(strings.ToUpper("lowerCaSe")) // LOWERCASE
+	fmt.Println(strings.ToLower("LOWercaSE")) // lowercase
+
+	fmt.Println("------------ Trim ------------")
+	// returns a slice of the string s with all leading and
+	// trailing Unicode code points contained in cutset removed.
+	fmt.Println(strings.Trim("!#$Hello Gopher^&", "!#$^&"))      // Hello Gopher
+	fmt.Println(strings.TrimLeft("!#$Hello Gopher^&", "!#$^&"))  // Hello Gopher^&
+	fmt.Println(strings.TrimRight("!#$Hello Gopher^&", "!#$^&")) // !#$Hello Gopher
+	// use trim function
+	fmt.Println(strings.TrimFunc("¡¡¡Hello, Gophers!!!", func(r rune) bool {
+		return !unicode.IsLetter(r) && !unicode.IsNumber(r)
+	})) // Hello, Gophers
+	fmt.Println(strings.TrimSpace(" \t\n Hello, Gophers \n\t\r\n")) // Hello, Gophers
 
 }
