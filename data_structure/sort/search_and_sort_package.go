@@ -26,6 +26,16 @@ func printSearchResultFloats(i int, target float64, list []float64) {
 	fmt.Println("--------------------------------------")
 }
 
+func printSearchResultString(i int, target string, list []string) {
+	fmt.Printf("Index for insertion/first occurace of target: %d\n", i)
+	if i < len(list) {
+		fmt.Printf("Target Found: %v\n", list[i] == target)
+	} else {
+		fmt.Printf("Target Found: %v\n", false)
+	}
+	fmt.Println("--------------------------------------")
+}
+
 func BinarySearch() {
 	numSlice := []int{1, 3, 5, 7, 9, 9, 11, 13}
 	target, n := 8, len(numSlice)
@@ -99,6 +109,26 @@ func BinarySearchInts() {
 	// Target Found: false
 }
 
+func BinarySearchString() {
+	fmt.Println("Search Strings")
+	list := []string{"a", "c", "e", "g", "i"}
+
+	target := "e"
+	i := sort.SearchStrings(list, target)
+	printSearchResultString(i, target, list)
+
+	target = "b"
+	i = sort.SearchStrings(list, target)
+	printSearchResultString(i, target, list)
+
+	// Search Strings
+	// Index for insertion/first occurace of target: 2
+	// Target Found: true
+	// --------------------------------------
+	// Index for insertion/first occurace of target: 1
+	// Target Found: false
+}
+
 func SortFloats() {
 	// inplace sort, copy slice in order to present original one
 	floatSlice := []float64{5.2, -1.3, 0.7, -3.8, 2.6} // unsorted
@@ -147,11 +177,13 @@ func SortStruct() {
 	// inplace sort, array get modified, save a copy to see diff
 	people_copy := make([]Person, len(people))
 	copy(people_copy, people)
-	sort.Slice(people, func(i, j int) bool {
+	cmp := func(i, j int) bool {
 		return people[i].Age < people[j].Age
-	})
+	}
+	sort.Slice(people, cmp)
 	fmt.Println("After Sorting: ", people)
 	fmt.Println("After Sorting: ", people_copy)
+	fmt.Println("Sorted Slice: ", sort.SliceIsSorted(people, cmp))
 	// Before Sorting:  [{Bob 31} {John 42} {Michael 17} {Jenny 26}]
 	// After Sorting:  [{Michael 17} {Jenny 26} {Bob 31} {John 42}]
 	// After Sorting:  [{Bob 31} {John 42} {Michael 17} {Jenny 26}]
@@ -192,9 +224,13 @@ func SortStrings() {
 }
 
 func main() {
+	// search
 	BinarySearch()
 	BinarySearchInts()
 	BinarySearchFloats()
+	BinarySearchString()
+
+	// sort
 	SortFloats()
 	SortInts()
 	SortStruct()
