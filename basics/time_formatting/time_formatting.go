@@ -21,8 +21,11 @@ func main() {
 	// Fri Dec  2 21:31:10 2022
 	// 2022-12-02T21:31:10.324074+05:30
 
-	t2, _ := time.Parse("3 04 PM", "8 41 PM")
-	p(t2) // 0000-01-01 20:41:00 +0000 UTC
+	// to parse AM PM time, give time template as 3:04PM only, no other time
+	t2, _ := time.Parse("3:04PM", "8:41PM") // time templte, time value
+	p(t2)                                   // 0000-01-01 20:41:00 +0000 UTC
+	// to parse time to 24H format, give 3:04PM in 24H format - 15:04 no other time
+	p(t2.Format("15:04"))
 
 	// 2022-12-02T21:32:56-00:00
 	fmt.Printf("%d-%02d-%02dT%02d:%02d:%02d-00:00\n",
