@@ -7,15 +7,15 @@ type Folder struct {
 	children []Inode
 }
 
-func (f *Folder) print(indent string) {
+func (f Folder) print(indent string) {
 	fmt.Println(indent + f.name)
 	for _, child := range f.children {
 		child.print(indent + indent)
 	}
 }
 
-func (f *Folder) clone() Inode {
-	cloneFolder := &Folder{name: f.name + "_clone"}
+func (f Folder) clone() Inode {
+	cloneFolder := Folder{name: f.name + "_clone"}
 	var tempChildern []Inode
 	for _, child := range f.children {
 		copy := child.clone()

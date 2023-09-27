@@ -15,15 +15,15 @@ objects, even complex ones, without coupling to their specific classes.
 import "fmt"
 
 func main() {
-	file1 := &File{name: "File1"}
-	file2 := &File{name: "File2"}
-	file3 := &File{name: "File3"}
+	file1 := File{name: "File1"}
+	file2 := File{name: "File2"}
+	file3 := File{name: "File3"}
 
-	folder1 := &Folder{
+	folder1 := Folder{
 		children: []Inode{file1},
 		name:     "Folder1",
 	}
-	folder2 := &Folder{
+	folder2 := Folder{
 		children: []Inode{folder1, file2, file3},
 		name:     "Folder2",
 	}
