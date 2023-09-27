@@ -2,6 +2,16 @@ package main
 
 import "fmt"
 
+/*
+
+use command : `go run .`
+not `go run main.go`
+
+DEFINITION: FACTORY PATTERN
+lets you produce families of related objects without specifying their concrete classes.
+
+*/
+
 // choose factory based on string input - to decide between all the factories
 // available we have to make decision based on something
 func GetSportsFactory(brand string) (InterfaceSportFactory, error) {
