@@ -56,3 +56,12 @@ func printShirtDetails(s IShirt) {
 	fmt.Printf("Logo: %s\n", s.getLogo())
 	fmt.Printf("Size: %d\n", s.getSize())
 }
+
+// Logo: nike
+// Size: 15
+// Logo: nike
+// Size: 15
+// Logo: adidas
+// Size: 14
+// Logo: adidas
+// Size: 14

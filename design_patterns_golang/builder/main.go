@@ -34,3 +34,12 @@ func printHouse(house House) {
 	fmt.Printf("Normal House Num Floor: %d\n", house.floor)
 	fmt.Println("-----------------------------")
 }
+
+// Normal House Door Type: wooden door
+// Normal House Window Type: wooden window
+// Normal House Num Floor: 2
+// -----------------------------
+// Normal House Door Type: metallic door
+// Normal House Window Type: metallic window
+// Normal House Num Floor: 3
+// -----------------------------
