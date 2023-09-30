@@ -38,3 +38,15 @@ func main() {
 	winComputer.Print()
 	fmt.Println()
 }
+
+// Print request for mac
+// Printing by a HP Printer
+
+// Print request for mac
+// Printing by a EPSON Printer
+
+// Print request for windows
+// Printing by a HP Printer
+
+// Print request for windows
+// Printing by a EPSON Printer
