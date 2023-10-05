@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// declare a heap
+// declare a heap type
 type IntHeap []int
 
 // implement 3 mandatory method on the heap data structure as per heap lib interface
@@ -39,3 +39,9 @@ func main() {
 	}
 	fmt.Println()
 }
+
+// Heap:  [1 2 5 3]
+// > 1
+// > 2
+// > 3
+// > 5
