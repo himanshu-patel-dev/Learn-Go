@@ -41,4 +41,10 @@ func main() {
 	//uint16		0 to 65536
 	//uint32		0 to 4294967295
 	//uint64		0 to 18446744073709551615
+
+	// On a 32-bit CPU, int is a 32-bit signed integer like
+	// an int32. On most 64-bit CPUs, int is a 64-bit signed integer, just like an int64.
+	// Because int isn’t consistent from platform to platform, it is a compile-time error to
+	// assign, compare, or perform mathematical operations between an int and an int32
+	// or int64 without a type conversion
 }

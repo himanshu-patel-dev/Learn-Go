@@ -31,17 +31,33 @@ func (h *IntHeap) Pop() any {
 // and removes them in order of priority.
 func main() {
 	h := &IntHeap{2, 1, 5}
-	heap.Init(h)
+	heap.Init(h)	// this makes an array a valid min heap
+	// after init every push and pop will retain a valid heap
+	heap.Push(h, 6)
 	heap.Push(h, 3)
-	fmt.Println("Heap: ", (*h))
+	heap.Push(h, 4)
+	heap.Push(h, 0)
+
+	// fmt.Println("Heap: ", (*h))
 	for h.Len() > 0 {
+		fmt.Println("Heap: ", (*h))
+
 		fmt.Printf("> %d \n", heap.Pop(h))
 	}
 	fmt.Println()
 }
 
-// Heap:  [1 2 5 3]
-// > 1
-// > 2
-// > 3
-// > 5
+// Heap:  [0 2 1 6 3 5 4]
+// > 0 
+// Heap:  [1 2 4 6 3 5]
+// > 1 
+// Heap:  [2 3 4 6 5]
+// > 2 
+// Heap:  [3 5 4 6]
+// > 3 
+// Heap:  [4 5 6]
+// > 4 
+// Heap:  [5 6]
+// > 5 
+// Heap:  [6]
+// > 6 
