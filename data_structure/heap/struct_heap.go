@@ -34,13 +34,16 @@ func main() {
 	n3 := &MinNode{priority: 1, data: []int{1}}
 	n4 := &MinNode{priority: 0, data: []int{0}}
 	pq := &MinHeap{n1, n2, n3}
+	// be carefull here, it is heap.Init not minHeap.Init, use the heap package not struct
 	heap.Init(pq)
+	// be carefull here, it is heap.Push not minHeap.Push, use the heap package not struct
 	heap.Push(pq, n4)
 	printAll(pq)
 	fmt.Println("-----------")
 	for pq.Len() > 0 {
-		node := heap.Pop(pq)
-		fmt.Println(node)
+		// be carefull here, it is heap.Pop not minHeap.Pop, use the heap package not struct
+		node := (heap.Pop(pq)).(*MinNode)
+		fmt.Println(node.priority)
 	}
 }
 
