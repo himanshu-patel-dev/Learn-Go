@@ -178,4 +178,10 @@ func main() {
 	})) // Hello, Gophers
 	fmt.Println(strings.TrimSpace(" \t\n Hello, Gophers \n\t\r\n")) // Hello, Gophers
 
+	// reverse a string
+	runeArray := []rune("elppa")
+	for i, j := 0, len(runeArray)-1; i < j; i, j = i+1, j-1 {
+		runeArray[i], runeArray[j] = runeArray[j], runeArray[i]
+	}
+	fmt.Println(string(runeArray)) // apple
 }
