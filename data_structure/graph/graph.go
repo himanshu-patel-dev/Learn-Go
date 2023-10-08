@@ -1,81 +1,82 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
-// graph structure
+// Graph structure
 type Graph struct {
-	vertices []*Vertex
+	vertices int
+	adjList  map[int][]int
 }
 
-// vertex structure
-type Vertex struct {
-	key      int
-	adjacent []*Vertex
-}
-
-// add vertex
-func (g *Graph) AddVertex(k int) {
-	g.vertices = append(g.vertices, &Vertex{key: k})
-}
-
-// add edge to the graph
-func (g *Graph) AddEdge(from, to int) {
-	// get vertex
-	fromVertex := g.getVertex(from)
-	toVertex := g.getVertex(to)
-
-	if fromVertex == nil || toVertex == nil {
-		err := fmt.Errorf("Invalid edge (%v->%v)", from, to)
-		fmt.Println(err.Error())
-	} else if contains(fromVertex.adjacent, to) {
-		fmt.Printf("Edge already exists (%v->%v)\n", from, to)
-	} else {
-		fromVertex.adjacent = append(fromVertex.adjacent, toVertex)
+// NewGraph return a pointer to a new graph
+func NewGraph(n int) *Graph {
+	return &Graph{
+		vertices: n,
+		adjList:  make(map[int][]int),
 	}
 }
 
-// get vertex
-func (g *Graph) getVertex(key int) *Vertex {
-	for _, v := range g.vertices {
-		if v.key == key {
-			return v
-		}
+func (g *Graph) AddEdge(src, dest int) {
+	// skip invalid edge addition, comment below logic in case
+	// we can have vertex number that don't depends on
+	if g.vertices <= src || g.vertices <= dest {
+		return
 	}
-	return nil
+	if !slices.Contains(g.adjList[src], dest) {
+		g.adjList[src] = append(g.adjList[src], dest)
+	}
+	if !slices.Contains(g.adjList[dest], src) {
+		g.adjList[dest] = append(g.adjList[dest], src)
+	}
 }
 
-// contains
-func contains(s []*Vertex, k int) bool {
-	for _, v := range s {
-		if v.key == k {
+func (g *Graph) DFSUtil(src int, dest int, visited map[int]bool) bool {
+	if visited[src] {
+		return false
+	}
+	visited[src] = true
+	// if src node is dest node, then we reached
+	// the desired node return true
+	if src == dest {
+		return true
+	}
+
+	// iterate for all neighbour and dfs for dest node
+	for _, nbr := range g.adjList[src] {
+		if g.DFSUtil(nbr, dest, visited) {
 			return true
 		}
 	}
 	return false
 }
 
-// Print will print the adjacent list of each vertex of graph
+func (g *Graph) DFS(src, dest int) {
+	visited := make(map[int]bool)
+	g.DFSUtil(src, dest, visited)
+}
+
 func (g *Graph) Print() {
-	for _, v := range g.vertices {
-		fmt.Printf("\nVertex: %v : ", v.key)
-		for _, v := range v.adjacent {
-			fmt.Printf("%v, ", v.key)
-		}
+	for node, nbr := range g.adjList {
+		fmt.Println(node, nbr)
 	}
-	fmt.Println()
 }
 
 func main() {
-	myGraph := &Graph{}
-	// add 5 vertex
-	for i := 0; i < 5; i++ {
-		myGraph.AddVertex(i)
-	}
+	myGraph := NewGraph(5)
 	// add edges in vertices
 	myGraph.AddEdge(1, 2)
 	myGraph.AddEdge(4, 2)
 	myGraph.AddEdge(3, 2)
 	myGraph.AddEdge(7, 2) // invalid edge
 	myGraph.AddEdge(4, 2) // existing edge
+
 	myGraph.Print()
 }
+
+// 1 [2]
+// 2 [1 4 3]
+// 4 [2]
+// 3 [2]
