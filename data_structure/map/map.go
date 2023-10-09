@@ -51,6 +51,20 @@ func main() {
 	} else {
 		fmt.Println("Not nil Map")
 	}
+
+	// Map are pass by reference in function call, i.e. if map is passed
+	// to a function which end up modifing the map then the actual map is
+	// modified not a copy value
+	m := make(map[string]int)
+	m["hello"] = 1
+	m["world"] = 2
+	fmt.Println(m) // map[hello:1 world:2]
+	helloWorld(m)
+	fmt.Println(m) // map[hello:100 world:2]
+}
+
+func helloWorld(m map[string]int) {
+	m["hello"] = 100
 }
 
 /*
