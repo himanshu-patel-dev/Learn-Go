@@ -63,4 +63,15 @@ func main() {
 	}
 	fmt.Println("\n----------------")
 
+	// arrays/slices are pass by values
+	a := []int{1, 2, 3}
+	fmt.Println(a) // [1 2 3]
+	addMore(a)
+	fmt.Println(a) // [1 2 3]
+	fmt.Println("\n----------------")
+}
+
+func addMore(a []int) {
+	a = append(a, 10)
+	a = append(a, 20)
 }
