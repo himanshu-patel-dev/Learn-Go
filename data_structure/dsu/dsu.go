@@ -7,6 +7,7 @@ type DSU struct {
 }
 
 func (dsu *DSU) init(n int) {
+	dsu.data = make([]int, n)
 	for i := 0; i < n; i++ {
 		dsu.data[i] = i
 	}
@@ -45,7 +46,7 @@ func (dsu *DSU) setLen() int {
 }
 
 func main() {
-	dsu := DSU{data: make([]int, 5)}
+	dsu := DSU{}
 	dsu.init(5)
 
 	dsu.union(0, 1)
