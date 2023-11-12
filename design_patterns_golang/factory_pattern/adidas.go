@@ -1,9 +1,9 @@
 package main
 
-type Adidas struct {
+type AdidasFactory struct {
 }
 
-func (a *Adidas) makeShoe() IShoe {
+func (a *AdidasFactory) makeShoe() IShoe {
 	return &AdidasShoe{
 		Shoe: Shoe{
 			logo: "adidas",
@@ -12,7 +12,7 @@ func (a *Adidas) makeShoe() IShoe {
 	}
 }
 
-func (a *Adidas) makeShirt() IShirt {
+func (a *AdidasFactory) makeShirt() IShirt {
 	return &AdidasShirt{
 		Shirt: Shirt{
 			logo: "adidas",
