@@ -5,10 +5,24 @@ package main
 use command : `go run .`
 not `go run main.go`
 
-DEFINITION: Prototype Pattern
+-------------------- DEFINITION: Prototype Pattern
 
 Prototype is a creational design pattern that allows cloning
 objects, even complex ones, without coupling to their specific classes.
+
+-------------------- APPLICATION
+
+- Use the Prototype pattern when your code shouldn’t depend 
+on the concrete classes of objects that you need to copy.
+
+-------------------- IMPLEMENTATION
+- Create the prototype interface and declare the clone method in it. 
+Or just add the method to all classes of an existing class hierarchy, 
+if you have one.
+
+- Every class must explicitly override the cloning method and use its own 
+class name along with the new operator. Otherwise, the cloning method may 
+produce an object of a parent class.
 
 */
 
