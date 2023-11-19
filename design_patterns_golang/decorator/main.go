@@ -7,7 +7,7 @@ import "fmt"
 use command : `go run .`
 not `go run main.go`
 
-DEFINITION: DECORATOR PATTERN
+--------------------- DEFINITION: DECORATOR PATTERN
 
 Decorator is a structural pattern that allows adding new behaviors
 to objects dynamically by placing them inside special wrapper objects,
@@ -15,6 +15,14 @@ called decorators.
 
 Thus the calling method on decorators is exactaly same
 as the method we need to call on base object
+
+--------------------- DEFINITION: APPLICATIONS
+
+Use the Decorator pattern when you need to be able to assign extra behaviors 
+to objects at runtime without breaking the code that uses these objects.
+
+Use the pattern when it’s awkward or not possible to extend an object’s 
+behavior using inheritance.
 
 */
 
